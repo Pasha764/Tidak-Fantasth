@@ -4,13 +4,18 @@ using UnityEngine;
 
 namespace TidakFantasth
 {
-    [CreateAssetMenu(fileName = "New Card", menuName = "Card")]
-    public class Card : ScriptableObject
+    public class Card : MonoBehaviour
     {
+        public GameObject atkPrefab;
+        public GameObject buffPrefab;
+        public GameObject debuffPrefab;
         public string cardName;
         public CardType cardType;
         public int damage;
 
+        [HideInInspector] public Vector3 offset;
+
+        [HideInInspector] public HandManager ownerHand;
 
         public enum CardType
         {
@@ -19,6 +24,43 @@ namespace TidakFantasth
             Debuff
         }
 
-        // Additional properties and methods can be added here
+        void Update()
+        {
+            if (Input.GetKeyDown("q"))
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        public void SetOwnerHand(HandManager hand)
+        {
+            ownerHand = hand;
+        }
+
+        void OnMouseDown()
+        {
+            offset = transform.position - GetMouseWorldPos();
+        }
+
+        void OnMouseDrag()
+        {
+            transform.position = GetMouseWorldPos() + offset;
+        }
+
+        void OnMouseUp()
+        {
+            if (ownerHand != null)
+                ownerHand.ReturnCardToHand(this);
+        }
+
+        Vector3 GetMouseWorldPos()
+        {
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
+            return Camera.main.ScreenToWorldPoint(mousePos);
+        }
+    
+        
     }
 }
+
