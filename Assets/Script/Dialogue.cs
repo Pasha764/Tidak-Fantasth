@@ -10,6 +10,8 @@ public class Dialogue : MonoBehaviour
     public string [] lines;
     public float textSpeed;
     private int index;
+    private bool isTyping = false; 
+
     void Start()
     {
         textComponent.text = string.Empty;

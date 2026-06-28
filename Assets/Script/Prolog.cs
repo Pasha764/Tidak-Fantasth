@@ -19,7 +19,7 @@ public class Prolog : MonoBehaviour
     {
         StartCoroutine(FadeIn());
         // cek video selesai
-        Debug.Log("1. Script Start Berjalan, Memulai Fade In...");
+        Debug.Log("1. Script Start jalan, gas Fade In");
 
         Color awal = fadeImage.color;
         awal.a = 1f;
@@ -32,7 +32,7 @@ public class Prolog : MonoBehaviour
 
     void EndedVideo(VideoPlayer vp)
     {
-        Debug.Log("1. Script Start Berjalan, Memulai Fade Out...");
+        Debug.Log("1. Script end, gas Fade Out...");
         StartCoroutine(FadeOut());
 
     }
