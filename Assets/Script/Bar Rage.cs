@@ -44,7 +44,7 @@ public class BarRage : MonoBehaviour
         return true;
     }
 
-    private void ClampAndUpdateUI()
+    public void ClampAndUpdateUI()
     {
         if (maxRage <= 0f)
         {

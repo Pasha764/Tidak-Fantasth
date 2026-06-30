@@ -12,12 +12,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Card kamu ada di namespace TidakFantasth.
-        if (TidakFantasth.Card.isDragging)
+        if (TidakFantasth.Card.isDragging == true)
         {
             dropKartuUi.SetActive(true);
         }
-        else
-        {
+        
+        if (TidakFantasth.Card.isDragging == false){
             dropKartuUi.SetActive(false);
         }
     }

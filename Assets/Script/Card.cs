@@ -14,8 +14,11 @@ namespace TidakFantasth
         public CardType cardType;
         public int damage;
         public static bool isDragging;
+        public bool isActivated;
+        public bool isInDropZone = false;
+        
 
-        [HideInInspector] public Vector3 offset;
+        
 
         [HideInInspector] public HandManager ownerHand;
 
@@ -26,6 +29,7 @@ namespace TidakFantasth
         void Start()
         {
             isDragging = false;
+            isActivated = false;
         }
 
         public enum CardType
@@ -41,6 +45,12 @@ namespace TidakFantasth
             {
                 Destroy(gameObject);
             }
+
+            if (isActivated == true)
+            {
+                ApplyCardEffect();
+                Destroy(gameObject);
+            }
         }
 
         public void SetOwnerHand(HandManager hand)
@@ -48,28 +58,50 @@ namespace TidakFantasth
             ownerHand = hand;
         }
 
-        void OnMouseDown()
-        {
-            offset = transform.position - GetMouseWorldPos();
-        }
-
-        void OnMouseDrag()
-        {
-            isDragging = true;
-            transform.position = GetMouseWorldPos() + offset;
-        }
-
+    
         void OnMouseUp()
         {
             // Efek kartu hanya aktif kalau kartu dilepas di panel Drop Kartu.
             // Saat ini belum ada referensi/ID untuk panel drop, jadi:
             // - jika script ini ditempel di area panel drop, kamu bisa panggil ActivateFromDrop()
             // - jika tidak, efek tidak otomatis jalan.
-            isDragging = false;
             if (ownerHand != null)
                 ownerHand.ReturnCardToHand(this);
+                // Mengecek apakah kartu berada di atas DropKartu
+            Collider2D hit = Physics2D.OverlapPoint(transform.position);
+
+            if (hit != null)
+            {
+                DropKartu drop = hit.GetComponent<DropKartu>();
+
+                if (drop != null)
+                {
+                    drop.OnCardDropped(gameObject);
+                }
+                
+
+                if (isInDropZone)
+                {
+                    isActivated = true;
+                }
+            }
         }
 
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("DropKartu"))
+            {
+                isInDropZone = true;
+            }
+        }
+
+        void OnTriggerExit2D(Collider2D other)
+        {
+            if (other.CompareTag("DropKartu"))
+            {
+                isInDropZone = false;
+            }
+        }
 
         private void ApplyCardEffect()
         {
@@ -84,6 +116,7 @@ namespace TidakFantasth
                         NextAttackIsBuffed = false;
                     }
 
+                    
                     // TODO: ganti dengan sistem damage ke target/health kamu.
                     Debug.Log($"[Card] Attack: baseDamage={damage}, finalDamage={finalDamage} (buffed={NextAttackIsBuffed})");
                     break;
@@ -104,13 +137,6 @@ namespace TidakFantasth
             }
         }
 
-        Vector3 GetMouseWorldPos()
-        {
-            Vector3 mousePos = Input.mousePosition;
-            mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
-            return Camera.main.ScreenToWorldPoint(mousePos);
-        }
+        
     }
 }
-
-
