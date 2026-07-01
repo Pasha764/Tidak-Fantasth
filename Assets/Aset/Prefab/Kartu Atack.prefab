@@ -105,10 +105,9 @@ MonoBehaviour:
   debuffPrefab: {fileID: 3594327932039396192, guid: be537baabf4946b41ace825fd6022707, type: 3}
   cardName: Attack
   cardType: 0
-  damage: 10
+  damage: 20
   isActivated: 0
   isInDropZone: 0
-  dropKartuUi: {fileID: 0}
   ownerHand: {fileID: 0}
 --- !u!61 &294355243971005066
 BoxCollider2D:

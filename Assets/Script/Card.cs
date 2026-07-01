@@ -117,7 +117,7 @@ namespace TidakFantasth
                         NextAttackIsBuffed = false;
                     }
 
-                    
+                    BarRage.Instance.AddRage(finalDamage);
                     // TODO: ganti dengan sistem damage ke target/health kamu.
                     Debug.Log($"[Card] Attack: baseDamage={damage}, finalDamage={finalDamage} (buffed={NextAttackIsBuffed})");
                     break;

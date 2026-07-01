@@ -13,6 +13,7 @@ public class RoundManager : MonoBehaviour
 
     [Header("Reference")]
     [SerializeField] private HandManager handManager;
+    public GameObject gameOverUi;
 
     [Header("UI")]
     public Text roundText;
@@ -28,6 +29,7 @@ public class RoundManager : MonoBehaviour
 
         // Draw 3 kartu saat game dimulai
         handManager.StartNewRound();
+        gameOverUi.SetActive(false);
     }
 
     void Update()
@@ -37,6 +39,11 @@ public class RoundManager : MonoBehaviour
             Debug.Log(roundText);
             Debug.Log(roundText.text);
             Debug.Log(roundText.gameObject.activeInHierarchy);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            GameOver();
         }
     }
     public void NextRound()
@@ -63,8 +70,7 @@ public class RoundManager : MonoBehaviour
     {
         Debug.Log("GAME OVER");
 
-        // Contoh
-        // gameOverPanel.SetActive(true);
-         Time.timeScale = 0;
+        gameOverUi.SetActive(true);
+        Time.timeScale = 0;
     }
 }
