@@ -103,10 +103,12 @@ MonoBehaviour:
   atkPrefab: {fileID: 8621615980172547188, guid: d880ff2b4770e2a4e93c5807500a8f9b, type: 3}
   buffPrefab: {fileID: 7480371672400282126}
   debuffPrefab: {fileID: 3594327932039396192, guid: be537baabf4946b41ace825fd6022707, type: 3}
-  cardName: 
+  cardName: Buff
   cardType: 1
   damage: 0
   isActivated: 0
+  isInDropZone: 0
+  dropKartuUi: {fileID: 0}
   ownerHand: {fileID: 0}
 --- !u!61 &8221413549315202921
 BoxCollider2D:

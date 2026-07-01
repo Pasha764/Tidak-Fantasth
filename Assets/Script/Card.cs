@@ -61,6 +61,7 @@ namespace TidakFantasth
     
         void OnMouseUp()
         {
+            isDragging = false;
             // Efek kartu hanya aktif kalau kartu dilepas di panel Drop Kartu.
             // Saat ini belum ada referensi/ID untuk panel drop, jadi:
             // - jika script ini ditempel di area panel drop, kamu bisa panggil ActivateFromDrop()
@@ -135,6 +136,8 @@ namespace TidakFantasth
                     break;
                 }
             }
+
+            RoundManager.Instance.NextRound();
         }
 
         
