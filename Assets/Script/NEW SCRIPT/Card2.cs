@@ -108,12 +108,12 @@ public class Card2 : MonoBehaviour
         }
         }
          private Vector3 GetMouseWorldPos()
-    {
+        {
         Vector3 mousePos = Input.mousePosition;
         // Menyesuaikan kedalaman Z kartu terhadap kamera game
         mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
         return Camera.main.ScreenToWorldPoint(mousePos);
-    }
+        }
 
         void OnTriggerEnter2D(Collider2D other)
         {

@@ -5,61 +5,91 @@ using TMPro;
 
 public class Dialogue : MonoBehaviour
 {
-    // Start is called before the first frame update
     public TextMeshProUGUI textComponent;
-    public string [] lines;
     public float textSpeed;
-    private int index;
     private bool isTyping = false; 
+
+    [Header("Daftar Dialog Per Kategori Kartu")]
+    public string[] attackLines;
+    public string[] buffLines;
+    public string[] debuffLines;
+
+    [Header("Daftar Dialog Story (Berurutan)")]
+    public string[] storyLines;
+
+    private string currentLine;
+
+    [Header("Referensi Dialog Enemy")]
+    public EnemyDialogue enemyDialogue;
 
     void Start()
     {
         textComponent.text = string.Empty;
-        StartDialogue();
+      
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if(textComponent.text == lines[index]){
-                NextLine();
-            }
-        }
-        else
-        {
-            StopAllCoroutines();
-            textComponent.text = lines[index];
-        }
-    }
-
-    void StartDialogue()
-    {
-        index = 0;
-        StartCoroutine(TypeLine());
+      
     }
 
     IEnumerator TypeLine()
     {
-        foreach(char c in lines[index].ToCharArray())
+        isTyping = true;
+        foreach(char c in currentLine.ToCharArray())
         {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
+        isTyping = false;
+
+
+        yield return new WaitForSeconds(1.5f);
+
+      
+        textComponent.text = string.Empty;
+
+    
+        if (enemyDialogue != null)
+        {
+            RoundManager.Instance.NextRound();
+            enemyDialogue.LanjutKeStorylineBerikutnya();
+        }
     }
 
-    void NextLine()
+    public void TriggerCardDialogue(string cardType)
     {
-        if(index < lines.Length - 1)
+      
+        if (enemyDialogue != null && enemyDialogue.IsEnemyTyping())
         {
-            index++;
-            textComponent.text = string.Empty;
+            Debug.LogWarning("[Dialogue] Kartu diabaikan karena musuh sedang mengetik!");
+            textSpeed = 0f;
+            enemyDialogue.textSpeed = 0f;
+            //return;  
+        }
+
+        StopAllCoroutines();
+        textComponent.text = string.Empty;
+        
+        string[] selectedPool = null;
+        switch (cardType.ToLower())
+        {
+            case "attack": selectedPool = attackLines; break;
+            case "buff": selectedPool = buffLines; break;
+            case "debuff": selectedPool = debuffLines; break;
+        }
+
+        if (selectedPool != null && selectedPool.Length > 0)
+        {
+            int randomIndex = Random.Range(0, selectedPool.Length);
+            currentLine = selectedPool[randomIndex];
             StartCoroutine(TypeLine());
         }
-        else
-        {
-            gameObject.SetActive(false);
-        }
+    }
+
+   
+    public bool IsPlayerTyping()
+    {
+        return isTyping;
     }
 }

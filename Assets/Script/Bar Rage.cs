@@ -12,10 +12,12 @@ public class BarRage : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Image rageImage;
     public GameObject winUi;
+    public GameObject loseUi;
 
     public float CurrentRage => currentRage;
     public float MaxRage => maxRage;
-
+    public RoundManager roundManager;
+    
     private void Awake()
     {
         Instance = this;
@@ -31,14 +33,14 @@ public class BarRage : MonoBehaviour
     {
         currentRage = Mathf.Clamp(value, 0f, maxRage);
         UpdateUI();
-        CheckWin();
+        Check();
     }
 
     public void AddRage(float amount)
     {
         currentRage = Mathf.Clamp(currentRage + amount, 0f, maxRage);
         UpdateUI();
-        CheckWin();
+        Check();
     }
 
     public bool ConsumeRage(float amount)
@@ -59,15 +61,51 @@ public class BarRage : MonoBehaviour
         }
     }
 
-    private void CheckWin()
+    public void CheckWin()
     {
-        if (currentRage >= maxRage)
-        {
+        
             Debug.Log("PLAYER WIN!");
             winUi.SetActive(true);
             Time.timeScale = 0f; // Pause the game
             
+    }
+    public void CheckLose()
+    {
+        
+            Debug.Log("PLAYER LOSE!");
+            loseUi.SetActive(true);
+            Time.timeScale = 0f; // Pause the game
+            
+    }
+
+
+    public void Check()
+    {
+        
+        int roundCurrent = roundManager.currentRound;
+        int roundMax = roundManager.maxRound;
+
+        if(roundCurrent == roundMax)
+        {
+            if (currentRage < maxRage)
+            {
+                CheckLose();
+            }
+            if (currentRage == maxRage)
+            {
+                CheckWin();
+            }
+            
         }
+        else
+        {
+            if (currentRage == maxRage)
+            {
+                CheckWin();
+            }
+        }
+
+        
     }
 }
 

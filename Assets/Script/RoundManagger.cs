@@ -9,7 +9,7 @@ public class RoundManager : MonoBehaviour
 
     [Header("Round")]
     public int currentRound = 1;
-    public int maxRound = 10;
+    public int maxRound;
 
     [Header("Reference")]
     [SerializeField] private HandManager handManager;
@@ -17,6 +17,8 @@ public class RoundManager : MonoBehaviour
 
     [Header("UI")]
     public Text roundText;
+
+    public BarRage rageBar;
 
     private void Awake()
     {
@@ -41,19 +43,14 @@ public class RoundManager : MonoBehaviour
             Debug.Log(roundText.gameObject.activeInHierarchy);
         }
 
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            GameOver();
-        }
     }
     public void NextRound()
     {
         currentRound++;
 
-        if (currentRound > maxRound)
+        if (currentRound == maxRound)
         {
-            GameOver();
-            return;
+            rageBar.CheckLose();
         }
 
         UpdateRoundUI();
@@ -66,11 +63,11 @@ public class RoundManager : MonoBehaviour
         roundText.text = $"Round {currentRound}/{maxRound}";
     }
 
-    private void GameOver()
-    {
-        Debug.Log("GAME OVER");
+    //private void GameOver()
+    //{
+    //    Debug.Log("GAME OVER");
 
-        gameOverUi.SetActive(true);
-        Time.timeScale = 0;
-    }
+    //    gameOverUi.SetActive(true);
+    //    Time.timeScale = 0;
+    //}
 }

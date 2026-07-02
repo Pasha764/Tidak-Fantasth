@@ -154,6 +154,7 @@ public class HandManager : MonoBehaviour
             handCards[i].transform.DOMove(splinePosition, 0.25f);
             handCards[i].transform.DOLocalRotateQuaternion(rotation, 0.25f);
         }
+        
     }
     public void StartNewRound()
     {
