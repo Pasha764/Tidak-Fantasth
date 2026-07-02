@@ -25,10 +25,10 @@ public class HandManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) DrawCard();
+        //if (Input.GetKeyDown(KeyCode.Space)) DrawCard();
     }
 
-    private void DrawCard()
+    public void DrawCard()
     {
         // Bersihkan referensi kartu yang sudah dihancurkan/dihapus.
         int beforeCount = handCards.Count;
@@ -153,6 +153,32 @@ public class HandManager : MonoBehaviour
 
             handCards[i].transform.DOMove(splinePosition, 0.25f);
             handCards[i].transform.DOLocalRotateQuaternion(rotation, 0.25f);
+        }
+    }
+    public void StartNewRound()
+    {
+        // Hapus semua kartu yang masih ada di tangan
+        foreach (GameObject card in handCards)
+        {
+            if (card != null)
+            {
+                Destroy(card);
+            }        
+    }
+
+        handCards.Clear();
+
+        // Tunggu satu frame agar Destroy() selesai
+        StartCoroutine(DrawNewHand());
+    }
+
+    private IEnumerator DrawNewHand()
+    {
+        yield return null;
+
+        for (int i = 0; i < 3; i++)
+        {
+            DrawCard();
         }
     }
 }

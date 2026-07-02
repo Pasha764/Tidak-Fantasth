@@ -40,6 +40,31 @@ namespace TidakFantasth
 
         void OnMouseDown()
         {
+            isDragging = false;
+            // Efek kartu hanya aktif kalau kartu dilepas di panel Drop Kartu.
+            // Saat ini belum ada referensi/ID untuk panel drop, jadi:
+            // - jika script ini ditempel di area panel drop, kamu bisa panggil ActivateFromDrop()
+            // - jika tidak, efek tidak otomatis jalan.
+            if (ownerHand != null)
+                ownerHand.ReturnCardToHand(this);
+                // Mengecek apakah kartu berada di atas DropKartu
+            Collider2D hit = Physics2D.OverlapPoint(transform.position);
+
+            if (hit != null)
+            {
+                DropKartu drop = hit.GetComponent<DropKartu>();
+
+                if (drop != null)
+                {
+                    drop.OnCardDropped(gameObject);
+                }
+                
+
+                if (isInDropZone)
+                {
+                    isActivated = true;
+                }
+            }
             offset = transform.position - GetMouseWorldPos();
         }
 
@@ -56,6 +81,38 @@ namespace TidakFantasth
 
         Vector3 GetMouseWorldPos()
         {
+            switch (cardType)
+            {
+                case CardType.Attack:
+                {
+                    int finalDamage = damage;
+                    if (NextAttackIsBuffed)
+                    {
+                        finalDamage *= 2;
+                        NextAttackIsBuffed = false;
+                    }
+
+                    BarRage.Instance.AddRage(finalDamage);
+                    // TODO: ganti dengan sistem damage ke target/health kamu.
+                    Debug.Log($"[Card] Attack: baseDamage={damage}, finalDamage={finalDamage} (buffed={NextAttackIsBuffed})");
+                    break;
+                }
+                case CardType.Buff:
+                {
+                    // Buff ini berlaku untuk Attack berikutnya.
+                    NextAttackIsBuffed = true;
+                    Debug.Log($"[Card] Buff aktif: Attack berikutnya akan dikali 2. (damageBuff={damage})");
+                    break;
+                }
+                case CardType.Debuff:
+                {
+                    // Placeholder sesuai kebutuhan.
+                    Debug.Log($"[Card] Debuff dipakai. (damage={damage})");
+                    break;
+                }
+            }
+
+            RoundManager.Instance.NextRound();
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
             return Camera.main.ScreenToWorldPoint(mousePos);

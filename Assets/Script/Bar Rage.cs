@@ -3,61 +3,70 @@ using UnityEngine.UI;
 
 public class BarRage : MonoBehaviour
 {
+    public static BarRage Instance;
+
     [Header("Rage Settings")]
     [SerializeField] private float maxRage = 100f;
     [SerializeField] private float currentRage = 0f;
 
     [Header("UI")]
     [SerializeField] private Image rageImage;
+    public GameObject winUi;
 
     public float CurrentRage => currentRage;
     public float MaxRage => maxRage;
 
-    private void Start()
+    private void Awake()
     {
-        ClampAndUpdateUI();
+        Instance = this;
     }
 
-    private void Update()
+    private void Start()
     {
-        // Hanya untuk memastikan UI konsisten jika ada script lain yang mengubah nilai tanpa memanggil method.
-        ClampAndUpdateUI();
+        UpdateUI();
+        winUi.SetActive(false);
     }
 
     public void SetRage(float value)
     {
-        currentRage = value;
-        ClampAndUpdateUI();
+        currentRage = Mathf.Clamp(value, 0f, maxRage);
+        UpdateUI();
+        CheckWin();
     }
 
     public void AddRage(float amount)
     {
-        currentRage += amount;
-        ClampAndUpdateUI();
+        currentRage = Mathf.Clamp(currentRage + amount, 0f, maxRage);
+        UpdateUI();
+        CheckWin();
     }
 
     public bool ConsumeRage(float amount)
     {
-        if (currentRage < amount) return false;
+        if (currentRage < amount)
+            return false;
+
         currentRage -= amount;
-        ClampAndUpdateUI();
+        UpdateUI();
         return true;
     }
 
-    public void ClampAndUpdateUI()
+    private void UpdateUI()
     {
-        if (maxRage <= 0f)
-        {
-            currentRage = 0f;
-            if (rageImage != null) rageImage.fillAmount = 0f;
-            return;
-        }
-
-        currentRage = Mathf.Clamp(currentRage, 0f, maxRage);
-
         if (rageImage != null)
         {
             rageImage.fillAmount = currentRage / maxRage;
+        }
+    }
+
+    private void CheckWin()
+    {
+        if (currentRage >= maxRage)
+        {
+            Debug.Log("PLAYER WIN!");
+            winUi.SetActive(true);
+            Time.timeScale = 0f; // Pause the game
+            
         }
     }
 }

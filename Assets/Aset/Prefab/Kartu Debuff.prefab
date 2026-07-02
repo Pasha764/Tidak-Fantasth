@@ -88,6 +88,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1182980010621896162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3594327932039396192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1440f8f8de1cec346896308b895385b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atkPrefab: {fileID: 8621615980172547188, guid: d880ff2b4770e2a4e93c5807500a8f9b, type: 3}
+  buffPrefab: {fileID: 7480371672400282126, guid: 7ae64fd9b7fd45a4299c597721e597c1, type: 3}
+  debuffPrefab: {fileID: 3594327932039396192}
+  cardName: Debuff
+  cardType: 2
+  damage: 0
+  isActivated: 0
+  isInDropZone: 0
+  dropKartuUi: {fileID: 0}
+  ownerHand: {fileID: 0}
 --- !u!61 &4904388267745303786
 BoxCollider2D:
   m_ObjectHideFlags: 0
