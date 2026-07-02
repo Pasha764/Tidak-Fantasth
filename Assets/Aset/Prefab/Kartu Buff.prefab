@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8011887176198375158}
   - component: {fileID: 497752825626570095}
-  - component: {fileID: 6184547584091650424}
   - component: {fileID: 8221413549315202921}
-  - component: {fileID: -420763278886373802}
   - component: {fileID: -11724078311409391}
+  - component: {fileID: 1549826573379448321}
+  - component: {fileID: 4702653320832898754}
   m_Layer: 0
   m_Name: Kartu Buff
   m_TagString: Untagged
@@ -155,19 +155,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.44}
   m_EdgeRadius: 0
---- !u!114 &-420763278886373802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7480371672400282126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69677fc950a651541aa2c3159b381469, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: 0, z: 0}
 --- !u!50 &-11724078311409391
 Rigidbody2D:
   serializedVersion: 4
@@ -195,3 +182,37 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1549826573379448321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7480371672400282126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2ab9e9130d60344b682a21ed768ef4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 0}
+--- !u!114 &4702653320832898754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7480371672400282126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e25356edafab1c4a858e53dbd8d48e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atkPrefab: {fileID: 8621615980172547188, guid: d880ff2b4770e2a4e93c5807500a8f9b, type: 3}
+  buffPrefab: {fileID: 7480371672400282126}
+  debuffPrefab: {fileID: 3594327932039396192, guid: be537baabf4946b41ace825fd6022707, type: 3}
+  cardName: 
+  cardType: 2
+  damage: 0
+  isActivated: 0
+  isInDropZone: 0
+  ownerHand: {fileID: 0}

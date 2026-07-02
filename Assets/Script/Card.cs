@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace TidakFantasth
 {
@@ -14,23 +13,10 @@ namespace TidakFantasth
         public CardType cardType;
         public int damage;
         public static bool isDragging;
-        public bool isActivated;
-        public bool isInDropZone = false;
-        
 
-        
+        [HideInInspector] public Vector3 offset;
 
         [HideInInspector] public HandManager ownerHand;
-
-        // Hook sementara untuk membuktikan "buff menambahkan damage attack x2".
-        // - Saat Buff dipakai, set flag sehingga Attack berikutnya memberikan damage x2.
-        public static bool NextAttackIsBuffed { get; private set; }
-
-        void Start()
-        {
-            isDragging = false;
-            isActivated = false;
-        }
 
         public enum CardType
         {
@@ -45,12 +31,6 @@ namespace TidakFantasth
             {
                 Destroy(gameObject);
             }
-
-            if (isActivated == true)
-            {
-                ApplyCardEffect();
-                Destroy(gameObject);
-            }
         }
 
         public void SetOwnerHand(HandManager hand)
@@ -58,8 +38,7 @@ namespace TidakFantasth
             ownerHand = hand;
         }
 
-    
-        void OnMouseUp()
+        void OnMouseDown()
         {
             isDragging = false;
             // Efek kartu hanya aktif kalau kartu dilepas di panel Drop Kartu.
@@ -86,25 +65,21 @@ namespace TidakFantasth
                     isActivated = true;
                 }
             }
+            offset = transform.position - GetMouseWorldPos();
         }
 
-        void OnTriggerEnter2D(Collider2D other)
+        void OnMouseDrag()
         {
-            if (other.CompareTag("DropKartu"))
-            {
-                isInDropZone = true;
-            }
+            transform.position = GetMouseWorldPos() + offset;
         }
 
-        void OnTriggerExit2D(Collider2D other)
+        void OnMouseUp()
         {
-            if (other.CompareTag("DropKartu"))
-            {
-                isInDropZone = false;
-            }
+            if (ownerHand != null)
+                ownerHand.ReturnCardToHand(this);
         }
 
-        private void ApplyCardEffect()
+        Vector3 GetMouseWorldPos()
         {
             switch (cardType)
             {
@@ -138,8 +113,12 @@ namespace TidakFantasth
             }
 
             RoundManager.Instance.NextRound();
+            Vector3 mousePos = Input.mousePosition;
+            mousePos.z = Camera.main.WorldToScreenPoint(transform.position).z;
+            return Camera.main.ScreenToWorldPoint(mousePos);
         }
-
+    
         
     }
 }
+
