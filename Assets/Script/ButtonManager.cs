@@ -35,6 +35,7 @@ public class ButtonManager : MonoBehaviour
 
     void AllButtonOff()
     {
+        panelPaused.SetActive(false);
         buttonPause.SetActive(false);
         buttonRestart.SetActive(false);
         buttonResume.SetActive(false);
@@ -42,6 +43,7 @@ public class ButtonManager : MonoBehaviour
     }
     void AllButtonOn()
     {
+        panelPaused.SetActive(true);
         buttonPause.SetActive(true);
         buttonRestart.SetActive(true);
         buttonResume.SetActive(true);
