@@ -6,13 +6,13 @@ using TMPro;
 public class EnemyDialogue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
-    public string[] lines;
+    [SerializeField] private string[] lines;
     public float textSpeed;
     private int index;
     private bool isTyping = false; 
 
     [Header("Referensi Dialog Player")]
-    public Dialogue playerDialogue; 
+    public Dialogue Dialogue; 
 
     void Start()
     {

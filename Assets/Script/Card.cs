@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
 
 namespace TidakFantasth
 {   
@@ -50,6 +51,7 @@ namespace TidakFantasth
             if (isActivated == true)
             {
                 ApplyCardEffect();
+                transform.DOKill();
                 Destroy(gameObject);
             }
         }
@@ -139,7 +141,7 @@ namespace TidakFantasth
                     int finalDamage = damage;
                     if (NextAttackIsBuffed)
                     {
-                        finalDamage *= 2;
+                        finalDamage *= 3;
                         NextAttackIsBuffed = false;
                     }
 

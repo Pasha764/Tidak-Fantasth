@@ -52,6 +52,7 @@ public class ButtonManager : MonoBehaviour
 
     public void Paused()
     {
+        SoundManager.Instance.TurnOnSFXButton();
         isGamePaused = true;
         Time.timeScale = 0f;
         panelPaused.SetActive(true);
@@ -67,6 +68,7 @@ public class ButtonManager : MonoBehaviour
 
     public void Resume()
     {
+        SoundManager.Instance.TurnOnSFXButton();
         isGamePaused = false;
         AllButtonOff();
         panelPaused.SetActive(false);
@@ -82,6 +84,7 @@ public class ButtonManager : MonoBehaviour
 
     public void Restart()
     {
+        SoundManager.Instance.TurnOnSFXButton();
         AllButtonOff();
         buttonPause.SetActive(true);
         Time.timeScale = 1f;
@@ -94,6 +97,7 @@ public class ButtonManager : MonoBehaviour
 
     public void MainMenu()
     {
+        SoundManager.Instance.TurnOnSFXButton();
         AllButtonOff();
         SceneManager.LoadScene(0);
     }

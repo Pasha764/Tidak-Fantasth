@@ -65,6 +65,7 @@ public class BarRage : MonoBehaviour
     {
         
             Debug.Log("PLAYER WIN!");
+            SoundManager.Instance.TurnOnSFXWIN();
             winUi.SetActive(true);
             Time.timeScale = 0f; // Pause the game
             
@@ -102,6 +103,7 @@ public class BarRage : MonoBehaviour
             if (currentRage == maxRage)
             {
                 CheckWin();
+                
             }
         }
 

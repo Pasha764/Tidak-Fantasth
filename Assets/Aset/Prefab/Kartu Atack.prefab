@@ -177,7 +177,7 @@ MonoBehaviour:
   debuffPrefab: {fileID: 0}
   cardName: 
   cardType: 0
-  damage: 20
+  damage: 10
   isActivated: 0
   isInDropZone: 0
   ownerHand: {fileID: 0}

@@ -18,16 +18,19 @@ public class MainMenu : MonoBehaviour
 
     public void OpenSettings()
     {
+        SoundManager.Instance.TurnOnSFXButton();
         settingsMenu.SetActive(true);
     }
 
     public void QuitGame()
     {
+        SoundManager.Instance.TurnOnSFXButton();
         Application.Quit();
     }
 
     public void CloseSettings()
     {
+        SoundManager.Instance.TurnOnSFXButton();
         settingsMenu.SetActive(false);
     }
 }

@@ -28,9 +28,11 @@ public class RoundManager : MonoBehaviour
     private void Start()
     {
         UpdateRoundUI();
+        SoundManager.Instance.TurnOnSFXDrawCard();
 
         // Draw 3 kartu saat game dimulai
         handManager.StartNewRound();
+        
         gameOverUi.SetActive(false);
     }
 
@@ -56,6 +58,7 @@ public class RoundManager : MonoBehaviour
         UpdateRoundUI();
 
         handManager.StartNewRound();
+        SoundManager.Instance.TurnOnSFXDrawCard();
     }
 
     private void UpdateRoundUI()
